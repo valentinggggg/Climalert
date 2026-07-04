@@ -11,8 +11,7 @@
   <url>https://github.com/dds-utn</url>
   <modules>
     <module>common-lib</module>
-    <module>donaciones-service</module>
-    <module>notificaciones-service</module>
+    <module>clima-alert-service</module>
   </modules>
 
   <properties>
