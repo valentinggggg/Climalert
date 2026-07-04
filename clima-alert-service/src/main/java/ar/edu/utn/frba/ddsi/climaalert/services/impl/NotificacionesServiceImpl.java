@@ -10,16 +10,17 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
-public class NotificacionesService implements INotificacionesService {
+public class NotificacionesServiceImpl implements INotificacionesService {
 
-  private static final Logger log = LoggerFactory.getLogger(NotificacionesService.class);
+  private static final Logger log = LoggerFactory.getLogger(NotificacionesServiceImpl.class);
 
   private final JavaMailSender mailSender;
 
   @Value("${climalert.destinatarios}")
   private String[] destinatarios;
 
-  public NotificacionesService(JavaMailSender mailSender) {
+  public NotificacionesServiceImpl(
+      JavaMailSender mailSender) {
     this.mailSender = mailSender;
   }
 
