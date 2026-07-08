@@ -17,6 +17,7 @@ public class AlertaServiceImpl implements IAlertaService {
 
   private final IDatoClimaticoRepository datoClimaticoRepository;
   private final INotificacionesService notificacionService;
+  private Long ultimoDatoNotificadoId;
 
   public AlertaServiceImpl(
       IDatoClimaticoRepository datoClimaticoRepository,
@@ -35,10 +36,20 @@ public class AlertaServiceImpl implements IAlertaService {
     }
 
     DatosClimaticos dato = ultimoDato.get();
-    if (dato.esCondicionCritica()) {
-      AlertaClimatica alerta = AlertaClimatica.from(dato);
-      log.warn("Condicion critica detectada: {}", dato);
-      notificacionService.notificarAlerta(alerta);
+
+    if (!dato.esCondicionCritica()) {
+      return;
     }
+
+    if (dato.getId().equals(ultimoDatoNotificadoId)) {
+      log.info("Condicion critica ya notificada para este dato");
+      return;
+    }
+
+    AlertaClimatica alerta = AlertaClimatica.from(dato);
+    log.warn("Condicion critica detectada: {}", dato);
+    notificacionService.notificarAlerta(alerta);
+    ultimoDatoNotificadoId = dato.getId();
   }
 }
+
